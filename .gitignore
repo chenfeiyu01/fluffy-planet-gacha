@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.DS_Store
+work/
+*.tar.gz
+*.tar
+# Keep full-resolution artwork and design proposal PNGs local; the app uses optimized WebP.
+/public/**/*.png
+/design/**/*.png

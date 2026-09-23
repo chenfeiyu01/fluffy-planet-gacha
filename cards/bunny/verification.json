@@ -1,0 +1,80 @@
+{
+  "blender": "5.2.0 LTS",
+  "language": "zh_HANS",
+  "interface_translation": true,
+  "config": "/Users/chenfeiyu/Documents/Codex/2026-09-22/wo-xia/outputs/fluffy-planet/cards/bunny/tools/blender-config",
+  "render_engine": "CYCLES",
+  "device": "GPU",
+  "images": {
+    "a": {
+      "size": [
+        1024,
+        1536
+      ],
+      "channels": 4,
+      "packed": true
+    },
+    "b": {
+      "size": [
+        1024,
+        1536
+      ],
+      "channels": 4,
+      "packed": true
+    },
+    "text": {
+      "size": [
+        1024,
+        1536
+      ],
+      "channels": 4,
+      "packed": true
+    },
+    "line_a": {
+      "size": [
+        1024,
+        1536
+      ],
+      "channels": 4,
+      "packed": true
+    },
+    "line_b": {
+      "size": [
+        1024,
+        1536
+      ],
+      "channels": 4,
+      "packed": true
+    }
+  },
+  "planes": {
+    "主体平面 · 光栅合成": {
+      "rotation_degrees": [
+        90.0,
+        0.0,
+        0.0
+      ]
+    },
+    "文字平面 · Alpha PNG": {
+      "rotation_degrees": [
+        90.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "parameters": {
+    "翻转角度": 18.0,
+    "过渡柔和": 0.3,
+    "光栅密度": 120.0,
+    "条纹显现": 0.22,
+    "扫掠": 4.0,
+    "柱镜折射": 0.3
+  },
+  "depth": 0.03,
+  "cycle": 0.0,
+  "frames": {
+    "front_A": 24,
+    "flip_B": 48
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "image_a": {
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGB"
+  },
+  "image_b": {
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGB"
+  },
+  "text": {
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparent_fraction": 0.9639,
+    "visible_fraction": 0.0331
+  },
+  "pair_mean_difference": 0.0346
+}

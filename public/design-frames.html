@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5efe8" />
+    <title>包边与口袋 · 设计提案</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f5efe8;
+        color: #4d3d45;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      }
+      main,
+      header,
+      footer {
+        width: min(1320px, calc(100% - 64px));
+        margin: auto;
+      }
+      header {
+        padding: 44px 0 28px;
+        border-bottom: 1px solid #d9c9c5;
+      }
+      .eyebrow {
+        color: #9d737f;
+        letter-spacing: 3px;
+        font-size: 11px;
+      }
+      .heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+      }
+      h1 {
+        font-weight: 550;
+        font-size: clamp(28px, 3vw, 42px);
+        letter-spacing: 2px;
+        margin: 20px 0 14px;
+      }
+      p {
+        font-size: 14px;
+        line-height: 1.85;
+        color: #876f78;
+        margin: 8px 0;
+      }
+      a {
+        color: #855969;
+        text-underline-offset: 5px;
+      }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        font-size: 13px;
+      }
+      h2 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 550;
+        letter-spacing: 1px;
+      }
+      .section-title {
+        display: flex;
+        gap: 18px;
+        align-items: baseline;
+        margin: 36px 0 22px;
+      }
+      .section-title small {
+        color: #9e848d;
+        font-size: 12px;
+      }
+      .frames {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+      .frame-art {
+        padding: 0;
+        border: 0;
+        width: 100%;
+        display: block;
+        position: relative;
+        cursor: zoom-in;
+        background: transparent;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 12px 30px #83617015;
+      }
+      .frame-art img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .card-name {
+        position: absolute;
+        text-align: center;
+        left: 25%;
+        width: 50%;
+        top: 76.4%;
+        transform: translateY(-50%);
+        color: #80525f;
+        font-size: clamp(15px, 1.45vw, 20px);
+        letter-spacing: 2px;
+        font-weight: 600;
+        text-shadow: 0 1px #fff9;
+      }
+      .cloud .card-name {
+        top: 74.9%;
+      }
+      .crystal .card-name {
+        top: 74.9%;
+        color: #725674;
+      }
+      h3 {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        font-size: 19px;
+        font-weight: 550;
+        margin: 18px 0 8px;
+      }
+      h3 b {
+        font:
+          italic 27px Georgia,
+          serif;
+        color: #b88788;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin: 12px 0 0;
+      }
+      .chips span {
+        border: 1px solid #d6bfc6;
+        border-radius: 20px;
+        padding: 4px 10px;
+        font-size: 11px;
+        color: #8d6877;
+      }
+      .pockets {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .pocket-art {
+        min-height: 280px;
+        height: clamp(280px, 31vw, 370px);
+        background: radial-gradient(ellipse at center, #fffaf5, #ede2e5);
+        border-radius: 24px;
+        display: grid;
+        place-items: center;
+      }
+      .pocket-art img {
+        width: 88%;
+        height: 100%;
+        max-height: 350px;
+        object-fit: contain;
+        filter: drop-shadow(0 12px 10px #80647120);
+      }
+      .notes {
+        margin: 32px 0 0;
+        padding: 22px 0;
+        border-top: 1px solid #d9c9c5;
+      }
+      footer {
+        padding: 24px 0 36px;
+        font-size: 12px;
+        color: #967883;
+      }
+      dialog {
+        border: 0;
+        padding: 18px;
+        background: #f9f2eb;
+        border-radius: 22px;
+        width: min(640px, calc(100vw - 24px));
+        max-height: calc(100svh - 24px);
+      }
+      dialog::backdrop {
+        background: #342631bd;
+        backdrop-filter: blur(8px);
+      }
+      dialog .frame-art {
+        cursor: default;
+        width: min(100%, calc((100svh - 135px) * 0.6666667));
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 2/3;
+        margin: 0 auto;
+      }
+      dialog .frame-art img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      dialog .card-name {
+        font-size: clamp(13px, 2.1vh, 23px);
+      }
+      .dialog-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+      #close {
+        background: #eadcdf;
+        color: #604452;
+        border: 0;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 23px;
+        cursor: pointer;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #ae778c;
+        outline-offset: 5px;
+      }
+      @media (max-width: 760px) {
+        main,
+        header,
+        footer {
+          width: calc(100% - 36px);
+        }
+        header {
+          padding-top: 28px;
+        }
+        .heading {
+          display: block;
+        }
+        .nav {
+          margin-top: 18px;
+        }
+        .frames {
+          grid-template-columns: 1fr;
+          gap: 34px;
+          max-width: 430px;
+          margin: auto;
+        }
+        .card-name {
+          font-size: 18px;
+        }
+        .pockets {
+          grid-template-columns: 1fr;
+        }
+        .section-title {
+          display: block;
+        }
+        .section-title small {
+          display: block;
+          margin-top: 10px;
+        }
+        .pocket-art {
+          height: 310px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span class="eyebrow">FLUFFY PLANET / DESIGN STUDIES 04</span>
+      <div class="heading">
+        <h1>为小可爱，做一件收藏礼服。</h1>
+        <nav class="nav">
+          <a href="/">体验应用</a><a href="/compare-ssr.html">立绘对比</a
+          ><a href="#pockets">看口袋</a>
+        </nav>
+      </div>
+      <p>
+        三种包边，两种口袋。以现版草莓奶兔为角色参考，比较边框、材质与大号 SSR
+        字标。点击卡面可放大。
+      </p>
+    </header>
+    <main>
+      <div class="section-title">
+        <h2>01 · 包边方向</h2>
+        <small>历史概念图 · 已选 A 用于 SR、C 用于 SSR；正式卡包已改用用户提供的展示包</small>
+      </div>
+      <section class="frames" aria-label="三款包边提案">
+        <article>
+          <button
+            class="frame-art berry"
+            aria-label="放大A草莓珠宝"
+            data-title="A · 草莓珠宝"
+          >
+            <img
+              src="/art/design-v4/frame-berry.png"
+              alt="草莓花、金色藤蔓与粉色珐琅组成的珠宝卡框"
+            /><span class="card-name">草莓奶兔</span>
+          </button>
+          <h3><b>A</b> 草莓珠宝</h3>
+          <p>
+            粉色珐琅、草莓切面宝石、花朵扣饰。保留规整卡形，把收藏感放在细节里。
+          </p>
+          <div class="chips">
+            <span>珠宝珐琅</span><span>规整轮廓</span><span>主题花饰</span>
+          </div>
+        </article>
+        <article>
+          <button
+            class="frame-art cloud"
+            aria-label="放大B云朵绒绣"
+            data-title="B · 云朵绒绣"
+          >
+            <img
+              src="/art/design-v4/frame-cloud.png"
+              alt="奶油绒绣、云朵波浪轮廓与缎带组成的萌系卡框"
+            /><span class="card-name">草莓奶兔</span>
+          </button>
+          <h3><b>B</b> 云朵绒绣</h3>
+          <p>
+            奶油绒面、缎带、绣线和云朵轮廓。触感更软，SSR
+            字标也做成饱满的立体绣章。
+          </p>
+          <div class="chips">
+            <span>绒绣缎带</span><span>轻度异形</span><span>软萌触感</span>
+          </div>
+        </article>
+        <article>
+          <button
+            class="frame-art crystal"
+            aria-label="放大C月光晶翼"
+            data-title="C · 月光晶翼"
+          >
+            <img
+              src="/art/design-v4/frame-crystal.png"
+              alt="月牙、虹彩水晶与不对称晶翼组成的异形卡框"
+            /><span class="card-name">草莓奶兔</span>
+          </button>
+          <h3><b>C</b> 月光晶翼</h3>
+          <p>
+            月牙和晶翼越过边缘，虹彩切面搭配深紫底座。轮廓更有变化，SSR
+            对比最强。
+          </p>
+          <div class="chips">
+            <span>虹彩水晶</span><span>不对称异形</span
+            ><span>深色徽章底座</span>
+          </div>
+        </article>
+      </section>
+      <div class="section-title" id="pockets">
+        <h2>02 · 收藏口袋</h2>
+        <small>草莓款已接入收纳动画 · 云朵款作为备选</small>
+      </div>
+      <section class="pockets" aria-label="两款口袋提案">
+        <article>
+          <div class="pocket-art">
+            <img
+              src="/art/design-v4/pocket-berry.png"
+              alt="草莓刺绣、薄荷缎带与宝石挂坠的粉色绒面口袋"
+            />
+          </div>
+          <h3><b>1</b> 草莓刺绣</h3>
+          <p>
+            粉绒布、立体花果刺绣、贝壳形袋口和薄荷蝴蝶结。已接入应用，可实际看卡片入袋。
+          </p>
+        </article>
+        <article>
+          <div class="pocket-art">
+            <img
+              src="/art/design-v4/pocket-cloud.png"
+              alt="带星星刺绣、紫色蝴蝶结和月亮挂坠的奶油云朵口袋"
+            />
+          </div>
+          <h3><b>2</b> 云朵星星</h3>
+          <p>
+            奶油圈绒、柔软云朵底边、睡着的小星星和月亮挂坠，更贴近绒绒星球的整体主题。
+          </p>
+        </article>
+      </section>
+      <div class="notes">
+        <p>
+          已直接修改应用：SSR 使用独立生成的大号金色珐琅字标，R / SR
+          字样放大；卡面的小字号装饰文案已删除；首页已移除更换抽卡动画功能。
+        </p>
+        <p>
+          包边确认方向后，再制作可复用的透明边框并适配双形态与 3D
+          厚度；这里的异形轮廓是视觉提案。
+        </p>
+      </div>
+    </main>
+    <footer>
+      内置 image_gen 生成 · 全部原图已保存在项目 public/art/design-v4/ ·
+      <a href="/">返回绒绒星球</a>
+    </footer>
+    <dialog id="detail" aria-labelledby="detail-title">
+      <div class="dialog-top">
+        <strong id="detail-title"></strong
+        ><button id="close" aria-label="关闭大图">×</button>
+      </div>
+      <div id="detail-art"></div>
+    </dialog>
+    <script>
+      const dialog = document.querySelector("#detail");
+      let trigger;
+      document.querySelectorAll("button.frame-art").forEach((button) =>
+        button.addEventListener("click", () => {
+          trigger = button;
+          document.querySelector("#detail-title").textContent =
+            button.dataset.title;
+          const frame = document.createElement("div");
+          frame.className = button.className;
+          for (const child of button.children)
+            frame.append(child.cloneNode(true));
+          document.querySelector("#detail-art").replaceChildren(frame);
+          dialog.showModal();
+        }),
+      );
+      document
+        .querySelector("#close")
+        .addEventListener("click", () => dialog.close());
+      dialog.addEventListener("close", () => trigger?.focus());
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+    </script>
+  </body>
+</html>

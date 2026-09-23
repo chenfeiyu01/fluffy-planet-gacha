@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>草莓奶兔 · SSR 立绘对比</title
+  ><style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #f8f1eb;
+      color: #51434c;
+      font-family:
+        system-ui,
+        -apple-system,
+        "PingFang SC",
+        sans-serif;
+      padding: clamp(20px, 4vw, 60px);
+    }
+    header {
+      max-width: 1280px;
+      margin: auto;
+    }
+    header small {
+      letter-spacing: 3px;
+      color: #a4848e;
+      font-size: 11px;
+    }
+    h1 {
+      font-size: clamp(25px, 3vw, 38px);
+      font-weight: 550;
+      letter-spacing: 2px;
+    }
+    header p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #8b7480;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 26px;
+      max-width: 1280px;
+      margin: 32px auto;
+    }
+    .art {
+      aspect-ratio: 2/3;
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: 0 15px 35px #76536520;
+      background: #eee;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .atlas {
+      position: absolute;
+      width: 500%;
+      height: 200%;
+      max-width: none;
+      left: 0;
+      top: -100%;
+    }
+    h2 {
+      font-size: 17px;
+      font-weight: 600;
+      margin: 20px 0 8px;
+    }
+    article p {
+      font-size: 13px;
+      line-height: 1.9;
+      color: #8a7480;
+    }
+    a {
+      color: #9a607c;
+    }
+    article strong {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #b48b74;
+    }
+    footer {
+      max-width: 1280px;
+      margin: 32px auto;
+      color: #947e87;
+      font-size: 12px;
+    }
+    @media (max-width: 720px) {
+      .grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        gap: 30px;
+      }
+      header {
+        max-width: 440px;
+      }
+    }
+  </style>
+  <header>
+    <small>FLUFFY PLANET · ART DIRECTION</small>
+    <h1>让 SSR 的特别，写在立绘里。</h1>
+    <p>
+      三张图使用相同比例，不加卡框和等级特效，对比立绘本身的区分度。新版仅作方案比较，当前卡池保留现版。
+    </p>
+  </header>
+  <main class="grid">
+    <article>
+      <div class="art">
+        <img class="atlas" src="art/friends.png" alt="R橘子水豚" />
+      </div>
+      <h2>普通 R · 橘子水豚</h2>
+      <strong>日常陪伴</strong>
+      <p>简单背景、静态坐姿、单一小道具，重点是角色本身。</p>
+    </article>
+    <article>
+      <div class="art">
+        <img src="art/bunny-b-repaired.png" alt="现版SSR草莓奶兔" />
+      </div>
+      <h2>现版 SSR · 草莓奶兔</h2>
+      <strong>魔法装饰</strong>
+      <p>加入王冠、披风与光效，但仍延续正面站姿和抱草莓的构图。</p>
+    </article>
+    <article>
+      <div class="art">
+        <img src="art/bunny-ssr-concept.png" alt="新版SSR提案莓梦花园守护者" />
+      </div>
+      <h2>新版 SSR 提案 · 莓梦守护者</h2>
+      <strong>角色专属的故事场景</strong>
+      <p>
+        漂浮姿态、花瓣礼服、草莓权杖与水晶温室。靠姿态、服饰轮廓、空间层次和叙事区分稀有度。
+      </p>
+    </article>
+  </main>
+  <footer>
+    这是立绘方向对照；尚未替换正式双形态卡图。<a href="/">返回绒绒星球</a>
+  </footer>
+</html>

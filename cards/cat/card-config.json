@@ -1,0 +1,37 @@
+{
+  "mode": "lenticular",
+  "title": "星眠小猫",
+  "subtitle": "绒绒星球 · SSR",
+  "technique": "月亮晚安 / 星河守护",
+  "tagline": "一个小可爱，两种心动",
+  "edition": "001",
+  "collection": "FLUFFY PLANET",
+  "description": "倾斜卡片，唤醒另一面的可爱",
+  "states": {
+    "a": {
+      "label": "月亮晚安"
+    },
+    "b": {
+      "label": "星河守护"
+    }
+  },
+  "lenticular": {
+    "flipAngle": 18,
+    "softness": 0.3,
+    "pitch": 120,
+    "stripe": 0.22,
+    "sweep": 4,
+    "refract": 0.3,
+    "ridge": 0.5,
+    "depth": 0.03,
+    "foil": 0.35,
+    "cycle": false
+  },
+  "effects": {
+    "particles": 0.6,
+    "glow": 0.3
+  },
+  "identity": {
+    "method": "Generate A, then edit A into B while locking identity, framing, and major geometry"
+  }
+}

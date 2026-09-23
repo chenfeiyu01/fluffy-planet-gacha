@@ -1,0 +1,43 @@
+{
+  "mode": "lenticular",
+  "title": "草莓奶兔",
+  "subtitle": "绒绒星球 · SSR",
+  "technique": "草莓抱抱 / 莓好魔法",
+  "tagline": "一个小可爱，两种心动",
+  "edition": "001",
+  "collection": "FLUFFY PLANET",
+  "description": "倾斜卡片，唤醒另一面的可爱",
+  "states": {
+    "a": {
+      "label": "草莓抱抱"
+    },
+    "b": {
+      "label": "莓好魔法"
+    }
+  },
+  "lenticular": {
+    "flipAngle": 18,
+    "softness": 0.3,
+    "pitch": 120,
+    "stripe": 0.22,
+    "sweep": 4,
+    "refract": 0.3,
+    "ridge": 0.5,
+    "depth": 0.03,
+    "foil": 0.35,
+    "cycle": false
+  },
+  "effects": {
+    "particles": 0.6,
+    "glow": 0.3
+  },
+  "identity": {
+    "method": "Generate A, then edit A into B while locking identity, framing, and major geometry"
+  },
+  "assets": {
+    "model": "./assets/card.glb",
+    "imageA": "./assets/image_a.png",
+    "imageB": "./assets/image_b.png",
+    "text": "./assets/text.png"
+  }
+}
