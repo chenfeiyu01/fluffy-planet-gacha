@@ -119,3 +119,5 @@ Sites公网版本4发布成功：https://fluffy-planet.chenpowpow.chatgpt.site �
 SSR 详情与提示优化（2026-09-24 已发布）：故事区移除扭动教程，卡片两侧改为带轻微摆动的卡通手及左右方向提示；3D 卡面叠加随视角变化的虹彩薄膜光泽，左右拖动时对应切换形态标题和独立故事。三张 SSR 均补写两形态故事。「轻触查看」去掉装饰符号并下移为卡片底部悬浮提示。本地浏览器确认左扭能切换画面与故事，故事文字完整显示，WebGL 正常渲染；构建通过。新版 3 个 JS/CSS 资源及首页 `index.html` 已上传香港 OSS，直连 HTTPS GET 均返回 200，线上入口与本地构建字节一致。实体手机上的手势与虹彩观感仍待用户体验。
 
 2026-09-29 本地素材整理：`public/art/` 已按 `characters/{ssr,sr,r,atlas}`、`card-parts/{frames,backs,pocket}`、`screen`、`originals`、`drafts` 分类，原 `new`、`final`、根目录平铺文件全部归位；没有删除图片。`public/art/00-素材说明.md` 列出 22 张角色的具体位置和拼图格位。源码及本地对照页同步改为新路径，`scripts/prune-deploy.mjs` 的动态卡框保留项也已更新。`npm run build` 通过，构建输出保留了全部正式图片。此轮仅整理本地文件，线上香港 OSS 仍使用此前的旧路径产物；下次发布必须上传完整新构建资源，不能只替换入口 HTML。
+
+2026-10-10 GitHub 源码公开：当前项目与 9 月 29 日的素材目录调整已推送到 `chenfeiyu01/fluffy-planet-gacha` 的 `main` 分支，仓库已设为公开，匿名访问 `https://github.com/chenfeiyu01/fluffy-planet-gacha` 返回 200。GitHub 源码仓库与香港 OSS 网站是两处独立交付，公开仓库不代表 OSS 已更新到这次本地素材目录版本。
