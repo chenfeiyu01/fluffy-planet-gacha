@@ -27,7 +27,7 @@ npm test
 ## 项目结构
 
 - `src/`：应用、抽卡逻辑、卡面合成和交互动画
-- `public/art/`：角色、卡背、场景及界面素材
+- `public/art/`：按角色、卡片组件、界面、PNG 原图和旧提案整理；先看 [`素材说明`](public/art/00-素材说明.md)
 - `public/media/`：待机与抽卡视频
 - `cards/`：Blender 角色工程和模型素材
 - `design/`：设计素材来源、提示词和资源体积记录

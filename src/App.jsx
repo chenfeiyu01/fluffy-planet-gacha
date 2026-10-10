@@ -35,6 +35,27 @@ export default function App() {
     ),
     [notice, setNotice] = useState("");
   const lock = useRef(false);
+  const collectionExitTimer = useRef();
+  const [collectionClosing, setCollectionClosing] = useState(false);
+  useEffect(() => () => clearTimeout(collectionExitTimer.current), []);
+  const openCollection = () => {
+    clearTimeout(collectionExitTimer.current);
+    setCollectionClosing(false);
+    setPage("collection");
+  };
+  const closeCollection = () => {
+    if (page !== "collection") return;
+    if (collectionClosing) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setPage("home");
+      return;
+    }
+    setCollectionClosing(true);
+    collectionExitTimer.current = setTimeout(() => {
+      setPage("home");
+      setCollectionClosing(false);
+    }, 340);
+  };
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -70,9 +91,9 @@ export default function App() {
         <button
           className="brand"
           aria-label="绒绒星球首页"
-          onClick={() => setPage("home")}
+          onClick={closeCollection}
         >
-          <img className="brand-logo" src="/art/fluffy-planet-logo-v3.webp" alt="绒绒星球" />
+          <img className="brand-logo" src="/art/screen/fluffy-planet-logo-v3.webp" alt="绒绒星球" />
           <span>
             <strong>绒绒星球</strong>
             <small>FLUFFY PLANET</small>
@@ -82,14 +103,14 @@ export default function App() {
         <nav aria-label="主导航">
           <button
             className={page === "home" ? "selected" : ""}
-            onClick={() => setPage("home")}
+            onClick={closeCollection}
           >
             <Gift size={19} />
             扭蛋小屋
           </button>
           <button
             className={page === "collection" ? "selected" : ""}
-            onClick={() => setPage("collection")}
+            onClick={openCollection}
           >
             <BookOpen size={19} />
             萌物图鉴
@@ -127,14 +148,15 @@ export default function App() {
           onDraw={draw}
           onView={setView}
           onRules={() => setModal("rules")}
-          onCollection={() => setPage("collection")}
+          onCollection={openCollection}
           busy={!!phase}
         />
       ) : (
         <Collection
           state={state}
           onView={setView}
-          onHome={() => setPage("home")}
+          onHome={closeCollection}
+          closing={collectionClosing}
         />
       )}
       <footer className="app-footer" inert={phase ? true : undefined}>
@@ -183,17 +205,17 @@ export default function App() {
             <div>
               <span className="rarity-tag SSR">SSR</span>
               <b>5%</b>
-              <span>2 位 · 双形态变身</span>
+              <span>3 位 · 双形态变身</span>
             </div>
             <div>
               <span className="rarity-tag SR">SR</span>
               <b>20%</b>
-              <span>4 位 · 全息闪卡</span>
+              <span>7 位 · 全息闪卡</span>
             </div>
             <div>
               <span className="rarity-tag R">R</span>
               <b>75%</b>
-              <span>6 位 · 萌物卡</span>
+              <span>12 位 · 萌物卡</span>
             </div>
           </div>
           <ul>

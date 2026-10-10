@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { loadCardBack } from "../cardArtwork";
+import { getCardBack, loadCardBack } from "../cardArtwork";
 export default function CardBack({ card, alt = "绒绒星球卡背" }) {
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(() => getCardBack(card)?.url || "");
   useEffect(() => {
     let live = true;
+    setUrl(getCardBack(card)?.url || "");
     loadCardBack(card)
       .then((result) => {
         if (live) setUrl(result.url);
@@ -26,6 +27,11 @@ export default function CardBack({ card, alt = "绒绒星球卡背" }) {
       </span>
     </>
   ) : (
-    <span className="card-back-loading" aria-label="卡背加载中" />
+    <img
+      className="card-face"
+      src={card.rarity === "SSR" ? "/art/card-parts/backs/ssr-back-art.webp" : "/art/card-parts/backs/card-back.webp"}
+      alt={alt}
+      draggable="false"
+    />
   );
 }

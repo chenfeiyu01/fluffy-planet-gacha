@@ -1,5 +1,5 @@
 import React, { useId } from "react";
-const ART = "/art/final/card-bag.webp";
+const ART = "/art/card-parts/pocket/card-bag.webp";
 // Preserve the entire bag and its accessories; cards enter through the top zip opening.
 export default function CardBag({ src, count }) {
   const id = useId().replace(/[^a-z0-9]/gi, "");

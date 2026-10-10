@@ -13,6 +13,19 @@ import CardFace from "./CardFace";
 import CardBack from "./CardBack";
 import CardBag from "./CardBag";
 import { pocketFlight } from "../pocketMotion";
+import { loadCardArtwork, loadCardBack } from "../cardArtwork";
+
+async function prepareResultCards(items) {
+  const artwork = await Promise.all([...new Set(items.map((item) => item.id))].flatMap((id) => [
+    loadCardBack(CARD_MAP[id]),
+    loadCardArtwork(CARD_MAP[id]),
+  ]));
+  await Promise.all([...new Set(artwork.map((result) => result.url))].map(async (url) => {
+    const image = new Image();
+    image.src = url;
+    await image.decode();
+  }));
+}
 
 function Cinema({ video, onFinish, soundOn }) {
   const ref = useRef();
@@ -40,7 +53,7 @@ function Cinema({ video, onFinish, soundOn }) {
         className="cinema-main-video"
         ref={ref}
         src={video.url}
-        poster="/art/summon-first-frame.webp"
+        poster="/art/screen/summon-first-frame.webp"
         playsInline
         muted={!soundOn}
         preload="auto"
@@ -104,11 +117,24 @@ export default function Reveal({
   viewerOpen,
 }) {
   const [cinemaExiting,setCinemaExiting] = useState(false);
+  const [cardsPending, setCardsPending] = useState(false);
   const cinemaDone = useRef(false);
   const cinemaExitTimer = useRef();
-  const finishCinema = () => {
+  const preparation = useRef(null);
+  useEffect(() => {
+    preparation.current = prepareResultCards(items);
+    preparation.current.catch(console.error);
+  }, [items]);
+  const finishCinema = async () => {
     if(cinemaDone.current) return;
     cinemaDone.current = true;
+    setCardsPending(true);
+    try {
+      await (preparation.current || prepareResultCards(items));
+    } catch (error) {
+      console.error(error);
+    }
+    setCardsPending(false);
     setCinemaExiting(true);
     setPhase("results");
     cinemaExitTimer.current=setTimeout(()=>setCinemaExiting(false),750);
@@ -195,7 +221,7 @@ export default function Reveal({
         );
         return {
           i,
-          src: img?.src || "/art/card-back.webp",
+          src: img?.src || "/art/card-parts/backs/card-back.webp",
           ...pocketFlight(rect, i, items.length, {
             width: innerWidth,
             height: innerHeight,
@@ -329,6 +355,7 @@ export default function Reveal({
       {video && (phase === "cinematic" || cinemaExiting) && (
         <div className={`cinema-transition ${cinemaExiting ? 'is-leaving' : ''}`}>
           <Cinema video={video} soundOn={soundOn} onFinish={finishCinema}/>
+          {cardsPending && <span className="cinema-card-wait">正在整理刚遇见的小伙伴…</span>}
         </div>
       )}
       {phase !== "cinematic" && (
@@ -370,9 +397,7 @@ export default function Reveal({
           </div>
           {detailIndex !== undefined && !turning.has(detailIndex) && (
             <button className="card-detail-guide" onClick={() => reveal(detailIndex)}>
-              <span aria-hidden="true">✧</span>
               <span>轻触查看</span>
-              <span aria-hidden="true">↗</span>
             </button>
           )}
           </div>

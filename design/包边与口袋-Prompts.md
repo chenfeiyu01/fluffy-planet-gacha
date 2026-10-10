@@ -4,8 +4,8 @@
 
 ## 草莓珠宝
 
-输出：`public/art/design-v4/frame-berry.png`。
-输入：现版奶兔魔法形态 public/art/bunny-b-repaired.png，作为角色与立绘参考。
+输出：`public/art/drafts/design-v4/frame-berry.png`。
+输入：现版奶兔魔法形态 public/art/originals/characters/bunny-b-repaired.png，作为角色与立绘参考。
 
 准确提示词：
 
@@ -15,8 +15,8 @@ Use case: compositing. Create ONE premium collectible card FRAME DESIGN concept 
 
 ## 云朵绒绣
 
-输出：`public/art/design-v4/frame-cloud.png`。
-输入：现版奶兔魔法形态 public/art/bunny-b-repaired.png，作为角色与立绘参考。
+输出：`public/art/drafts/design-v4/frame-cloud.png`。
+输入：现版奶兔魔法形态 public/art/originals/characters/bunny-b-repaired.png，作为角色与立绘参考。
 
 准确提示词：
 
@@ -26,8 +26,8 @@ Use case: compositing. Create ONE premium collectible card FRAME DESIGN concept 
 
 ## 月光晶翼
 
-输出：`public/art/design-v4/frame-crystal.png`。
-输入：现版奶兔魔法形态 public/art/bunny-b-repaired.png，作为角色与立绘参考。
+输出：`public/art/drafts/design-v4/frame-crystal.png`。
+输入：现版奶兔魔法形态 public/art/originals/characters/bunny-b-repaired.png，作为角色与立绘参考。
 
 准确提示词：
 
@@ -37,7 +37,7 @@ Use case: compositing. Design ONE beautiful premium SSR collectible card frame m
 
 ## SSR字标
 
-输出：`public/art/design-v4/ssr-emblem.png`。
+输出：`public/art/drafts/design-v4/ssr-emblem.png`。
 输入：无参考图，从文字生成。
 
 准确提示词：
@@ -48,7 +48,7 @@ Use case: logo-brand. Asset: transparent PNG game rarity emblem to overlay on a 
 
 ## 草莓刺绣口袋
 
-输出：`public/art/design-v4/pocket-berry.png`。
+输出：`public/art/drafts/design-v4/pocket-berry.png`。
 输入：无参考图，从文字生成。
 
 准确提示词：
@@ -59,7 +59,7 @@ Use case: stylized-concept. Asset: production-ready game sprite, ONE exquisite o
 
 ## 云朵星星口袋
 
-输出：`public/art/design-v4/pocket-cloud.png`。
+输出：`public/art/drafts/design-v4/pocket-cloud.png`。
 输入：无参考图，从文字生成。
 
 准确提示词：

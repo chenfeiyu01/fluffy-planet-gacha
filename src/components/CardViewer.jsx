@@ -1,4 +1,3 @@
-import { needsSSRGuide, completeSSRGuide } from "../ssrGuide";
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Download, RotateCcw } from "lucide-react";
@@ -15,8 +14,16 @@ float wave=.5+.5*sin((vUv.x*.8-vUv.y*.5+V.x*1.6)*9.);float sweep=pow(wave,24.);
 float edge=1.-smoothstep(.025,.075,min(min(vUv.x,1.-vUv.x),min(vUv.y,1.-vUv.y)));
 float idle=pow(.5+.5*sin((vUv.x*.75-vUv.y*.4)*7.-uTime*.38),26.);
 float grain=fract(sin(dot(floor(vUv*vec2(800.,1200.)),vec2(12.9898,78.233)))*43758.5453);
+float grazing=pow(1.-clamp(abs(V.z),0.,1.),1.4);
+float filmCoord=vUv.x*.95+vUv.y*.3-V.x*.9-V.y*.2-.54-sin(uTime*.17)*.025;
+float sunPrism=exp(-pow(filmCoord*5.5,2.));
+float fineBands=pow(.5+.5*sin((vUv.x*.92-vUv.y*.36+V.x*.65)*34.),6.);
+vec3 filmColor=spectrum(filmCoord*.6+V.x*.3+.2);
 c+=vec3(1.,.92,.78)*(.035+idle*.085)*uFoil;
 c+=spectrum(vUv.x+vUv.y+uTime*.025)*edge*(.08+idle*.10)*uFoil;
+float filmStrength=(sunPrism*(.28+grazing*.4)+fineBands*(.04+grazing*.06))*uFoil;
+c=mix(c,c*(.18+.82*filmColor)+filmColor*.06,clamp(filmStrength,0.,.46));
+c+=filmColor*sunPrism*(.045+grazing*.1)*uFoil;
 c+=(grain-.5)*.006;
 c+=spectrum(wave+V.x)*sweep*.13*uFoil;gl_FragColor=vec4(pow(max(c,vec3(0.)),vec3(2.2)),1.);
 #include <colorspace_fragment>}`;
@@ -38,7 +45,23 @@ function roundedShape() {
   s.quadraticCurveTo(x, y, x + r, y);
   return s;
 }
-function CanvasCard({ card, api, onExplore }) {
+function TurnHand({ side, form }) {
+  return (
+    <span className={`ssr-turn-cue ssr-turn-cue-${side}`} aria-hidden="true">
+      <span className="ssr-turn-hand">
+        <svg viewBox="0 0 64 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 53c-6-6-10-12-10-17 0-4 3-7 7-7 3 0 5 2 7 5V13c0-5 3-8 8-8s8 3 8 8v16c2-3 5-4 8-3 4 1 6 4 6 8v11c0 9-4 15-11 20H28l-8-12Z" fill="#FFF4DF" stroke="#9D6980" strokeWidth="3" strokeLinejoin="round"/>
+          <path d="M26 63h20v8H26z" fill="#F4B9CF" stroke="#9D6980" strokeWidth="3" strokeLinejoin="round"/>
+          <path d="M29 14v-2m10 2v-2" stroke="#FFFDF7" strokeWidth="3" strokeLinecap="round"/>
+          <path d="M17 38c2 0 4 2 6 5" stroke="#E6B5B9" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M32 56c4 1 8 0 11-3" stroke="#E6B5B9" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      </span>
+      <span className="ssr-turn-label"><b>{side === "left" ? "向左扭" : "向右扭"}</b><small>{form}</small></span>
+    </span>
+  );
+}
+function CanvasCard({ card, api, onFormChange }) {
   const host = useRef(),
     rotation = useRef({ x: 0, y: card.alternate ? .24 : 0, vx: 0, vy: 0, drag: null });
   const [status, setStatus] = useState("正在载入卡片…");
@@ -179,9 +202,12 @@ function CanvasCard({ card, api, onExplore }) {
         observer.observe(el);
         resize();
         setStatus("");
+        let shownForm = 0;
         api.current = {
           reset: () => {
             rotation.current = { x: 0, y: card.alternate ? .24 : 0, vx: 0, vy: 0, drag: null };
+            shownForm = 0;
+            onFormChange(0);
           },
           save: () => {
             renderer.render(scene, camera);
@@ -211,7 +237,15 @@ function CanvasCard({ card, api, onExplore }) {
           root.rotation.z = reduce ? 0 : Math.sin(time * 0.0008) * 0.008;
           root.updateMatrixWorld(true);
           inverse.copy(root.matrixWorld).invert();
-          uniforms.uAngle.value = Math.atan2(-Math.sin(root.rotation.y), Math.cos(root.rotation.y));
+          const angle = Math.atan2(-Math.sin(root.rotation.y), Math.cos(root.rotation.y));
+          uniforms.uAngle.value = angle;
+          if (card.alternate && Math.abs(angle) < 1.2) {
+            const nextForm = angle > .15 ? 1 : angle < -.15 ? 0 : shownForm;
+            if (nextForm !== shownForm) {
+              shownForm = nextForm;
+              onFormChange(nextForm);
+            }
+          }
           uniforms.uTime.value = reduce ? 0 : time * 0.001;
           renderer.render(scene, camera);
         });
@@ -238,7 +272,7 @@ function CanvasCard({ card, api, onExplore }) {
     <div
       className="card-stage"
       role="img"
-      aria-label={`${card.name} 3D卡片，可拖拽查看正反面`}
+      aria-label={`${card.name} 3D卡片，可拖拽查看正反面${card.rarity === "SSR" ? "，向左或向右拖动可切换形态" : ""}`}
       tabIndex={0}
       onPointerDown={(e) => {
         e.currentTarget.setPointerCapture(e.pointerId);
@@ -252,7 +286,6 @@ function CanvasCard({ card, api, onExplore }) {
           (2 * Math.PI) / Math.max(e.currentTarget.clientWidth, 300);
         const dy = (e.clientX - r.drag.x) * scale,
           dx = (e.clientY - r.drag.y) * scale;
-        if (Math.abs(e.clientX - r.drag.x) > 2) onExplore?.();
         r.y += dy;
         r.x += dx;
         r.vy = THREE.MathUtils.clamp(dy, -0.03, 0.03);
@@ -275,21 +308,19 @@ function CanvasCard({ card, api, onExplore }) {
       }}
     >
       <div className="renderer-mount" ref={host} />
+      {card.rarity === "SSR" && !status && (
+        <div className="ssr-turn-cues">
+          <TurnHand side="left" form={card.forms?.[1] || "另一形态"} />
+          <TurnHand side="right" form={card.forms?.[0] || "初始形态"} />
+        </div>
+      )}
       {status ? <span className="canvas-loading">{status}</span> : null}
     </div>
   );
 }
 export default function CardViewer({ card, onClose }) {
   const api = useRef();
-  const [guide, setGuide] = useState(
-    () => card.rarity === "SSR" && needsSSRGuide(),
-  );
-  const explore = () => {
-    if (guide) {
-      completeSSRGuide();
-      setGuide(false);
-    }
-  };
+  const [activeForm, setActiveForm] = useState(0);
   return (
     <Modal
       title={`${card.name}卡片详情`}
@@ -297,11 +328,10 @@ export default function CardViewer({ card, onClose }) {
       className={`card-modal floating-viewer rarity-${card.rarity}`}
     >
       <div className="floating-halo" aria-hidden="true" />
-      <CanvasCard card={card} api={api} onExplore={explore} />
+      <CanvasCard card={card} api={api} onFormChange={setActiveForm} />
       <section className="viewer-story" aria-label={`${card.name}的故事`}>
-        <h3>{card.name}<span>{card.rarity}</span></h3>
-        <p tabIndex={0}>{card.story || card.tag}</p>
-        {card.rarity === "SSR" && <div className="ssr-persistent-hint"><span aria-hidden="true">↔</span> 左右扭转卡片，看看另一种模样</div>}
+        <h3>{card.name}<span>{card.rarity}{card.forms ? ` · ${card.forms[activeForm]}` : ""}</span></h3>
+        <p key={activeForm} tabIndex={0}>{card.formStories?.[activeForm] || card.story || card.tag}</p>
       </section>
       <div className="viewer-actions">
         <button className="viewer-action" onClick={() => api.current?.reset()}>

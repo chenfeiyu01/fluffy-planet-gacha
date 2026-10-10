@@ -59,13 +59,13 @@ Edit image 1 using image 2 for the missing accessories. Keep image 1's modern cl
 ## 最终透明素材（用户提供）
 
 三张 PNG 已验证真实 Alpha，未经离线图像修改原样接入：
-- codex-clipboard-0ec1dbfa-753d-42ad-a4f0-6489231ce906.png → public/art/final/sr-frame.png
-- codex-clipboard-942ff339-f513-46b2-b181-63a7a62595e5.png → public/art/final/ssr-frame.png
-- codex-clipboard-1feb7073-e3d5-4a0f-bfeb-407033b3c281.png → public/art/final/card-bag.png
+- codex-clipboard-0ec1dbfa-753d-42ad-a4f0-6489231ce906.png → public/art/originals/card-parts/sr-frame.png
+- codex-clipboard-942ff339-f513-46b2-b181-63a7a62595e5.png → public/art/originals/card-parts/ssr-frame.png
+- codex-clipboard-1feb7073-e3d5-4a0f-bfeb-407033b3c281.png → public/art/originals/card-parts/card-bag.png
 
 ## SSR 新卡背印刷图
 
-内置 imagegen；输出 public/art/final/ssr-back-art.png。图案本身全幅，无需透明，由应用按实际卡片镜像轮廓裁切。
+内置 imagegen；输出 public/art/originals/card-parts/ssr-back-art.png。图案本身全幅，无需透明，由应用按实际卡片镜像轮廓裁切。
 
 ```text
 Use case: stylized-concept. Create a print artwork for the BACK of a premium cute Moonlight Crystal Wings collectible card, 2:3 portrait full-bleed illustration. This is a texture, NOT a product mockup: fill every pixel to the four edges with opalescent lavender and pale champagne-gold, no transparent area, no checkerboard, no surrounding background, no perspective. Center a small cream plush five-point star mascot with a gentle smiling face, sitting on an opal crescent, surrounded by a delicate embossed circular constellation seal. Large luminous opal crescent motif near UPPER RIGHT and a graceful pair of iridescent lilac crystal wing feathers at LOWER LEFT, gold engraved flowing lines, pearl points and restrained tiny stars linking the motifs. These motifs harmonize with a moon-and-crystal frame; cute and precious, refined and not overcrowded. Edges can be cropped into an irregular crescent/wing silhouette. Warm pearlescent and soft lavender enamel, dimensional polished fine gold details. NO text, NO letters, NO numbers, NO badges, NO butterflies, NO card name. One coherent high-quality back print with visible material texture, soft clear lighting, no huge glow.

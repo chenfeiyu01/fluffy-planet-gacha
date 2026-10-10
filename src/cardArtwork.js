@@ -3,6 +3,7 @@ import { composeFramedCard } from "./frameArtwork.js";
 import { mirrorOutline } from "./cardSilhouette.js";
 const images = new Map();
 const faces = new Map();
+const readyFaces = new Map();
 export function atlasRect(tile, width, height) {
   const x = Math.round(((tile % 5) * width) / 5);
   const y = Math.round((Math.floor(tile / 5) * height) / 2);
@@ -47,7 +48,7 @@ export function loadCardArtwork(card, alternate = false) {
         const source = await loadImage(
           alternate && card.alternate
             ? card.alternate
-            : card.image || "/art/friends.webp",
+            : card.image || card.atlas || "/art/characters/atlas/friends.webp",
         );
         await document.fonts.load('40px "Fluffy Display"');
         const canvas = document.createElement("canvas");
@@ -60,9 +61,11 @@ export function loadCardArtwork(card, alternate = false) {
             : atlasRect(card.tile, source.width, source.height);
         if (card.rarity !== "R") {
           const frame = await loadImage(
-            `/art/final/${card.rarity.toLowerCase()}-frame.webp`,
+            `/art/card-parts/frames/${card.rarity.toLowerCase()}-frame.webp`,
           );
-          return composeFramedCard(source, [sx, sy, sw, sh], frame, card);
+          const result = composeFramedCard(source, [sx, sy, sw, sh], frame, card);
+          readyFaces.set(key, result);
+          return result;
         }
         const finish = {
           R: {
@@ -156,7 +159,9 @@ export function loadCardArtwork(card, alternate = false) {
         ctx.lineWidth = 3;
         ctx.strokeText(card.rarity, 400, 1072);
         ctx.fillText(card.rarity, 400, 1072);
-        return { canvas, url: canvas.toDataURL("image/png") };
+        const result = { canvas, url: canvas.toDataURL("image/png") };
+        readyFaces.set(key, result);
+        return result;
       })().catch((e) => {
         faces.delete(key);
         throw e;
@@ -164,26 +169,31 @@ export function loadCardArtwork(card, alternate = false) {
     );
   return faces.get(key);
 }
+export const getCardArtwork = (card, alternate = false) =>
+  readyFaces.get(`${card.id}:${alternate}`);
 
 const backs = new Map();
+const readyBacks = new Map();
+const backKey = (card) => card.rarity === "R" ? "R" : card.id;
 export function loadCardBack(card) {
-  if (!backs.has(card.id))
+  const key = backKey(card);
+  if (!backs.has(key))
     backs.set(
-      card.id,
+      key,
       (async () => {
         const [front, image] = await Promise.all([
-          loadCardArtwork(card),
+          card.rarity === "R" ? null : loadCardArtwork(card),
           loadImage(
             card.rarity === "SSR"
-              ? "/art/final/ssr-back-art.webp"
-              : "/art/card-back.webp",
+              ? "/art/card-parts/backs/ssr-back-art.webp"
+              : "/art/card-parts/backs/card-back.webp",
           ),
         ]);
         const canvas = document.createElement("canvas");
         canvas.width = 800;
         canvas.height = 1200;
         const ctx = canvas.getContext("2d");
-        const outline = front.outline ? mirrorOutline(front.outline) : null;
+        const outline = front?.outline ? mirrorOutline(front.outline) : null;
         ctx.beginPath();
         if (outline) {
           outline.forEach(([x, y], i) =>
@@ -193,11 +203,14 @@ export function loadCardBack(card) {
         } else ctx.roundRect(0, 0, 800, 1200, 30);
         ctx.clip();
         ctx.drawImage(image, 0, 0, 800, 1200);
-        return { canvas, url: canvas.toDataURL("image/png"), outline };
+        const result = { canvas, url: canvas.toDataURL("image/png"), outline };
+        readyBacks.set(key, result);
+        return result;
       })().catch((e) => {
-        backs.delete(card.id);
+        backs.delete(key);
         throw e;
       }),
     );
-  return backs.get(card.id);
+  return backs.get(key);
 }
+export const getCardBack = (card) => readyBacks.get(backKey(card));

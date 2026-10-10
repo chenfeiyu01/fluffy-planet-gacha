@@ -30,7 +30,7 @@ export default function IdleScene({ active }) {
   }, [active]);
   return (
     <div className="world-art home-idle" aria-hidden="true">
-      <img className="idle-poster" src="/art/summon-first-frame.webp" alt="" />
+      <img className="idle-poster" src="/art/screen/summon-first-frame.webp" alt="" />
       <video
         ref={video}
         className={`idle-video ${playing ? "is-playing" : ""}`}

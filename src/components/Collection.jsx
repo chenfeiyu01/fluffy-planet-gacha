@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Heart, Lock, Sparkles, ArrowLeft } from "lucide-react";
 import { CARDS } from "../data";
 import CollectionArt from "./CollectionArt";
-export default function Collection({ state, onView, onHome }) {
+export default function Collection({ state, onView, onHome, closing = false }) {
   const [entered, setEntered] = useState(false);
   useEffect(() => {
     // Paint the stable, decoded grid once before starting the entrance transition.
@@ -20,7 +20,7 @@ export default function Collection({ state, onView, onHome }) {
       (!ownedOnly || state.collection[c.id]),
   );
   return (
-    <main className={`collection-page ${entered ? "is-entered" : ""}`}>
+    <main className={`collection-page ${entered ? "is-entered" : ""} ${closing ? "is-closing" : ""}`}>
       <div className="album-decor" aria-hidden="true">
         <span>✧</span>
         <span>✦</span>
@@ -42,7 +42,7 @@ export default function Collection({ state, onView, onHome }) {
             <Heart size={28} />
           </h1>
           <p>
-            已遇见 <b>{Object.keys(state.collection).length}</b> / 12 位萌友 ·
+            已遇见 <b>{Object.keys(state.collection).length}</b> / {CARDS.length} 位萌友 ·
             一共拥抱了 {state.total} 次
           </p>
         </div>

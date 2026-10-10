@@ -1,6 +1,6 @@
 import { loadCollectionArtwork } from "./collectionArtwork";
 import { CARDS } from "./data";
-import { loadImage } from "./cardArtwork";
+import { loadCardArtwork, loadImage } from "./cardArtwork";
 const media = new Map();
 export const mediaUrl = (path) => media.get(path) || path;
 export const loadViewer = () => import("./components/CardViewer");
@@ -53,20 +53,17 @@ async function bounded(job) {
 export async function preload(onProgress) {
   const jobs = [
     ...[
-      "/art/fluffy-planet-logo-v3.webp",
-      "/art/loading-garden.webp",
-      "/art/scene.webp",
-      "/art/summon-first-frame.webp",
-      "/art/buttons.webp",
-      "/art/final/card-bag.webp",
+      "/art/screen/fluffy-planet-logo-v3.webp",
+      "/art/screen/loading-garden.webp",
+      "/art/screen/scene.webp",
+      "/art/screen/summon-first-frame.webp",
+      "/art/screen/buttons.webp",
+      "/art/card-parts/pocket/card-bag.webp",
     ].map((path) => () => loadImage(path)),
     () => bufferVideo("/media/home-idle.mp4"),
     () => bufferVideo("/media/summon.mp4"),
     () => document.fonts.load('40px "Fluffy Display"'),
-    ...CARDS.flatMap((card) => [
-      () => loadCollectionArtwork(card),
-      () => loadCollectionArtwork(card, true),
-    ]),
+    ...CARDS.slice(0, 4).map((card) => () => loadCardArtwork(card)),
   ];
   let cursor = 0,
     done = 0;
@@ -87,4 +84,19 @@ export async function preload(onProgress) {
     }),
   );
   if (errors.length) throw new Error(`${errors.length} 项素材尚未准备好`);
+  // Keep the first screen independent of the full catalogue; prepare thumbnails in idle time.
+  void warmCollection();
+}
+
+let warming = false;
+async function warmCollection() {
+  if (warming) return;
+  warming = true;
+  for (const card of CARDS.slice(0, 4)) {
+    for (const back of [false, true]) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      try { await loadCollectionArtwork(card, back); }
+      catch (error) { console.error(error); }
+    }
+  }
 }

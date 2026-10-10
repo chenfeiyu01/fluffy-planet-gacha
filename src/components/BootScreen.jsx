@@ -18,7 +18,7 @@ export default function BootScreen({ children }) {
   if (ready) return children;
   return (
     <main className="boot-screen" aria-busy={!error}>
-      <img className="boot-illustration" src="/art/loading-garden.webp" alt="" fetchPriority="high" />
+      <img className="boot-illustration" src="/art/screen/loading-garden.webp" alt="" fetchPriority="high" />
       <div className="boot-sky-stars" aria-hidden="true">✧ <span>✦</span> ✧</div>
       <div className="boot-brand"><span>WELCOME TO</span><h1>绒绒星球</h1><small>FLUFFY PLANET</small></div>
       <div className="boot-status">

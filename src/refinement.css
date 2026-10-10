@@ -1151,12 +1151,12 @@
 .rarity-SSR .collection-art:after,
 .rarity-SSR .result-front:after,
 .rarity-SSR .card-shimmer {
-  mask: url("/art/final/ssr-frame.webp") center/100% 100% no-repeat;
+  mask: url("/art/card-parts/frames/ssr-frame.webp") center/100% 100% no-repeat;
 }
 .rarity-SR .collection-art:after,
 .rarity-SR .result-front:after,
 .rarity-SR .card-shimmer {
-  mask: url("/art/final/sr-frame.webp") center/100% 100% no-repeat;
+  mask: url("/art/card-parts/frames/sr-frame.webp") center/100% 100% no-repeat;
 }
 .flying-card {
   border-radius: 0;
@@ -1618,7 +1618,7 @@
   content: "";
   position: absolute;
   inset: -40px;
-  background: url("/art/summon-first-frame.webp") center/cover;
+  background: url("/art/screen/summon-first-frame.webp") center/cover;
   filter: blur(36px);
   opacity: 0.45;
 }
@@ -1991,19 +1991,33 @@
 .viewer-story h3{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 4px;font-size:14px;font-weight:500;letter-spacing:1px;line-height:20px}
 .viewer-story h3 span{font-size:10px;color:#f5d9b0;letter-spacing:1px}
 .viewer-story p{max-height:42px;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;margin:0;color:#eadbe4;font-size:12px;line-height:21px;scrollbar-width:thin;scrollbar-color:#f3dae54d transparent;}
+.floating-viewer.rarity-SSR .viewer-story{flex-basis:108px}
+.floating-viewer.rarity-SSR .viewer-story p{max-height:63px;animation:story-form-arrive .2s ease-out both}
+@keyframes story-form-arrive{from{opacity:.55;transform:translateY(3px)}to{opacity:1;transform:none}}
 .viewer-story p:focus-visible{outline:1px solid #eac4d5;outline-offset:2px}
 .floating-viewer .viewer-actions{padding:14px 0 max(18px,env(safe-area-inset-bottom));}
 @media(max-width:760px){.floating-viewer .card-stage{margin-top:46px}.floating-viewer .viewer-story{width:calc(100% - 40px)}.floating-viewer .viewer-actions{padding:12px 0 max(16px,env(safe-area-inset-bottom))}}
 @media(max-height:640px){.floating-viewer .card-stage{margin-top:36px}.floating-viewer .viewer-story{flex-basis:72px;padding:6px 12px}.viewer-story p{max-height:32px;line-height:16px;font-size:11px}.viewer-story h3{font-size:12px;margin-bottom:2px}.floating-viewer .viewer-actions{padding:8px 0 max(10px,env(safe-area-inset-bottom))}}
+@media(max-height:640px){.floating-viewer.rarity-SSR .viewer-story{flex-basis:84px}.floating-viewer.rarity-SSR .viewer-story p{max-height:49px;line-height:16px}}
+@media(prefers-reduced-motion:reduce){.floating-viewer.rarity-SSR .viewer-story p{animation:none}}
 
 /* Rare faces are already settled underneath the opaque reveal stage. */
 .result-card.rarity-SR .result-flipper,.result-card.rarity-SSR .result-flipper{transition:none!important}
-.ssr-persistent-hint{font-size:11px;line-height:18px;text-align:center;color:#f4d6a7;white-space:nowrap}
-.ssr-persistent-hint span{display:inline-block;margin-right:5px;animation:persistent-hint-sway 2.8s ease-in-out infinite}
-.rarity-SSR .viewer-story p{max-height:21px}
-@keyframes persistent-hint-sway{0%,100%{translate:-3px 0}50%{translate:3px 0}}
-@media(prefers-reduced-motion:reduce){.ssr-persistent-hint span{animation:none}}
-@media(max-height:640px){.rarity-SSR .viewer-story p{max-height:16px}.ssr-persistent-hint{font-size:10px;line-height:16px}}
+.ssr-turn-cues{position:absolute;inset:0;z-index:2;pointer-events:none}
+.ssr-turn-cue{position:absolute;top:50%;width:72px;display:flex;flex-direction:column;align-items:center;gap:3px;transform:translateY(-50%);color:#fff8f0;text-align:center;text-shadow:0 1px 6px #3b243f;}
+.ssr-turn-cue-left{left:max(3px,calc(50% - 175px))}
+.ssr-turn-cue-right{right:max(3px,calc(50% - 175px))}
+.ssr-turn-hand{display:block;width:47px;height:47px;filter:drop-shadow(0 4px 4px #3b243f8c)}
+.ssr-turn-hand svg{display:block;width:47px;height:47px;overflow:visible}
+.ssr-turn-cue-left .ssr-turn-hand{transform:rotate(-90deg);animation:ssr-hand-left 2.4s ease-in-out infinite}
+.ssr-turn-cue-right .ssr-turn-hand{transform:rotate(90deg);animation:ssr-hand-right 2.4s ease-in-out infinite .5s}
+.ssr-turn-label{display:grid;gap:1px;min-width:68px;padding:3px 5px;border:1px solid #fff5e85c;border-radius:10px;background:#493851a8;backdrop-filter:blur(6px);line-height:1.25}
+.ssr-turn-label b{font-size:11px;letter-spacing:1px;font-weight:600}
+.ssr-turn-label small{font-size:9px;color:#ffe6d2;white-space:nowrap}
+@keyframes ssr-hand-left{0%,100%{transform:translateX(3px) rotate(-90deg)}45%{transform:translateX(-6px) rotate(-98deg)}65%{transform:translateX(-4px) rotate(-94deg)}}
+@keyframes ssr-hand-right{0%,100%{transform:translateX(-3px) rotate(90deg)}45%{transform:translateX(6px) rotate(98deg)}65%{transform:translateX(4px) rotate(94deg)}}
+@media(max-width:380px){.ssr-turn-cue{width:62px}.ssr-turn-cue-left{left:2px}.ssr-turn-cue-right{right:2px}.ssr-turn-label{min-width:58px;padding:3px 2px}.ssr-turn-label b{font-size:10px}.ssr-turn-label small{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.ssr-turn-hand{animation:none!important}}
 
 /* Album: intrinsic image sizes must never participate in grid sizing. */
 .collection-grid {grid-template-columns:repeat(4,minmax(0,1fr));align-items:start;}
@@ -2017,6 +2031,8 @@
 .collection-card .locked-seal {backdrop-filter:none;}
 .collection-page {animation:none;opacity:0;transform:translateY(12px);transition:opacity .42s ease-out,transform .42s cubic-bezier(.22,.7,.18,1);}
 .collection-page.is-entered {opacity:1;transform:none;}
+.collection-page.is-closing {opacity:0;transform:translateY(-12px) scale(.985);transition-duration:.34s;pointer-events:none;}
+.cinema-card-wait {position:absolute;left:50%;bottom:12%;translate:-50% 0;z-index:5;padding:8px 15px;border-radius:999px;background:#fff8edeb;color:#76536c;font-size:13px;white-space:nowrap;box-shadow:0 8px 24px #3d234a33;}
 .collection-page .album-opening i {animation:none;}
 .collection-page.is-entered .album-opening i {animation:album-spark .7s .05s ease-out both;}
 @media(min-width:761px) and (max-width:1100px){.collection-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
@@ -2025,7 +2041,7 @@
 
 /* Hint is an overlay in the card rail gutter, not another layout row. */
 .result-card-stage{position:relative;width:100%;flex-shrink:0;}
-.result-card-stage > .card-detail-guide{position:absolute;bottom:-3px;left:50%;translate:-50% 0;z-index:3;margin:0;padding:3px 12px;min-height:26px;font-size:11px;line-height:20px;background:#fff8f2cf;border:0;box-shadow:none;white-space:nowrap;animation:none;transform:none;}
+.result-card-stage > .card-detail-guide{position:absolute;bottom:-12px;left:50%;translate:-50% 0;z-index:3;margin:0;padding:4px 15px;min-height:28px;font-size:11px;line-height:20px;background:#fff9f4ed;border:1px solid #fff;box-shadow:0 3px 12px #8f658229;white-space:nowrap;animation:none;transform:none;}
 .result-card-stage > .card-detail-guide:hover{transform:none;background:#fff8f2;}
 .result-card-stage > .card-detail-guide:active{transform:scale(.97);}
 

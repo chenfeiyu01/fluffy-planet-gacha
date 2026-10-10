@@ -1,6 +1,6 @@
 # 首页待机循环动画 · Seedance
 
-首帧与尾帧都使用 `public/art/summon-first-frame.png`，不使用含 UI 按钮或标题的页面截图。建议 8 秒，9:16 竖屏；与输入图保持相同构图。下面是创作约束，不保证模型能一次生成完全无缝的循环。
+首帧与尾帧都使用 `public/art/originals/screen/summon-first-frame.png`，不使用含 UI 按钮或标题的页面截图。建议 8 秒，9:16 竖屏；与输入图保持相同构图。下面是创作约束，不保证模型能一次生成完全无缝的循环。
 
 ## 正向 prompt
 

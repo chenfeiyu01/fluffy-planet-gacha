@@ -130,8 +130,8 @@ export default function Home({
           <Heart size={18} />
           <span>
             {Object.keys(state.collection).length
-              ? `已遇见 ${Object.keys(state.collection).length} / 12 位萌友`
-              : "12 位萌友，等你遇见"}
+              ? `已遇见 ${Object.keys(state.collection).length} / ${CARDS.length} 位萌友`
+              : `${CARDS.length} 位萌友，等你遇见`}
           </span>
           <ChevronRight size={17} />
         </button>

@@ -4,9 +4,9 @@
 
 ## 1. 日常形态局部编辑
 
-输入：`public/art/bunny-a.png`。
+输入：`public/art/originals/characters/bunny-a.png`。
 
-输出：`public/art/bunny-a-repaired.png`。
+输出：`public/art/originals/characters/bunny-a-repaired.png`。
 
 准确提示词：
 
@@ -16,9 +16,9 @@ Use case: precise-object-edit. Edit this exact portrait image of the cream plush
 
 ## 2. 魔法形态局部编辑
 
-输入顺序：`public/art/bunny-b.png`；第一步输出的日常形态修复图。
+输入顺序：`public/art/originals/characters/bunny-b.png`；第一步输出的日常形态修复图。
 
-输出：`public/art/bunny-b-repaired.png`。
+输出：`public/art/originals/characters/bunny-b-repaired.png`。
 
 准确提示词：
 
@@ -28,9 +28,9 @@ Use case: precise-object-edit. Image 1 is the EDIT TARGET: the magical strawberr
 
 ## 3. 新 SSR 立绘方向：莓梦守护者
 
-输入顺序：第一步输出的日常形态修复图；`public/art/bunny-b.png`。
+输入顺序：第一步输出的日常形态修复图；`public/art/originals/characters/bunny-b.png`。
 
-输出：`public/art/bunny-ssr-concept.png`。
+输出：`public/art/drafts/characters/bunny-ssr-concept.png`。
 
 目标：用动态剪影、专属服装与道具、叙事场景拉开 SSR 和普通卡的区别。维持奶兔角色辨识度。这是一幅方向提案，尚未制作对应的第二形态。
 

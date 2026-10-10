@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { loadCardArtwork } from "../cardArtwork";
+import { getCardArtwork, loadCardArtwork } from "../cardArtwork";
 import Art from "./Art";
 export default function CardFace({ card }) {
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(() => getCardArtwork(card)?.url || "");
   useEffect(() => {
     let live = true;
+    setUrl(getCardArtwork(card)?.url || "");
     loadCardArtwork(card)
       .then((face) => {
         if (live) setUrl(face.url);

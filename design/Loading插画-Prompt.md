@@ -1,5 +1,5 @@
 # Loading 插画
 
-内置 imagegen 生成，正式文件 public/art/loading-garden.png。UI 标题、进度、重试由应用叠加，不烘焙进图片。
+内置 imagegen 生成，正式文件 public/art/originals/screen/loading-garden.png。UI 标题、进度、重试由应用叠加，不烘焙进图片。
 
 Create a polished cute mobile game loading screen background illustration, portrait 9:16. High-end soft 3D plush toy art, creamy blush pink and lavender, warm pearl lighting, fine fluffy fur, miniature diorama. In the middle 35%-67% of the canvas: a white plush bunny hugging a strawberry, a mint green baby dragon with two tiny leaves, a lavender kitten carrying a golden star and a tiny blue penguin arrange pearly collectible cards and pastel gift boxes on a fluffy cloud island. A miniature pink gacha machine sits behind them, little constellation strings and ribbon garlands, tiny floating gold stars, charming and highly crafted. Top 25% stays mostly clean lavender-pink sky for app title overlay. Bottom 25% stays pale cream-pink clouds with low contrast, empty for a progress bar and loading copy. Decorative pastel castle silhouettes far in background at edges, magical atmosphere with restrained detail. Clear big readable characters, balanced composition, cozy tangible materials, no visual noise. NO words, NO text, NO letters, NO UI, NO loading bar, NO watermark, NO borders. Full bleed image, no transparency or checkerboard.
